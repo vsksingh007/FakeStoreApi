@@ -13,19 +13,26 @@ namespace FakeStoreApi.Core
         [Test]
         public async Task AddToCart()
         {
-            var cart = new
+            var cart = new Cart
             {
-                userId = 1,
-                date = DateTime.Now,
-                products = new[]
+                Id = 0,
+                UserId = 0,
+                Products = new List<Products>
+            {
+                new Products
                 {
-            new { productId = 1, quantity = 1 }
-        }
+                    Id = 1,
+                    Title = "Test Product",
+                    Price = 99.99,
+                    Description = "Sample product for testing",
+                    Category = "Test Category",
+                    Image = "http://example.com"
+                }
+            }
             };
-
             var response = await apiHelper.SendRequest("carts", Method.Post, cart);
 
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
     }
 }
